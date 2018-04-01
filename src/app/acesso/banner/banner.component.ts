@@ -47,7 +47,7 @@ export class BannerComponent implements OnInit {
 
       this.imagens[idx].estado = 'visivel';
       setTimeout(() => this.logicaRotacao(), 3000) ;
-      console.log(this.imagens);
+      // console.log(this.imagens);
     }
 
 
