@@ -18,7 +18,7 @@ export class CadastroComponent implements OnInit {
     'senha': new FormControl(null)
   });
 
-  constructor(private autenticacao: Autenticacao) { 
+  constructor(private autenticacao: Autenticacao) {
   }
 
   ngOnInit() {
