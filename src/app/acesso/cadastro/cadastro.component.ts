@@ -14,6 +14,7 @@ export class CadastroComponent implements OnInit {
   
   public formulario: FormGroup = new FormGroup({
     'email': new FormControl(null),
+    'nome_completo': new FormControl(null),
     'nome_usuario': new FormControl(null),
     'senha': new FormControl(null)
   });
