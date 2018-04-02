@@ -11,7 +11,7 @@ import { Autenticacao } from '../../autenticacao.service';
 export class CadastroComponent implements OnInit {
 
   @Output() public exibirPainel: EventEmitter<string> = new EventEmitter<string>();
-  
+
   public formulario: FormGroup = new FormGroup({
     'email': new FormControl(null),
     'nome_completo': new FormControl(null),
