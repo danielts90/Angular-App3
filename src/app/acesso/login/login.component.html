@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="card-title"></div>
     
-    <form [formGroup]='formularioLogin' (ngSubmit)="autenticar()">
+    <form [formGroup]='formularioLogin' novalidate (ngSubmit)="autenticar()">
       <div class="form-group">
         <input 
           type="email" 
@@ -10,6 +10,8 @@
           placeholder="E-mail"
           formControlName = "email"
         >
+        <small *ngIf="formularioLogin.get('email').valid && formularioLogin.get('email').touched" class="form-text text-success">Ok</small>
+        <small *ngIf="!formularioLogin.get('email').valid && formularioLogin.get('email').touched" class="form-text text-danger">E-mail inválido</small>
       </div>
       <div class="form-group">
         <input 
@@ -18,8 +20,12 @@
           placeholder="Senha"
           formControlName = "senha"
         >
+        <small *ngIf="formularioLogin.get('senha').valid && formularioLogin.get('senha').touched" class="form-text text-success">Ok</small>
+        <small *ngIf="!formularioLogin.get('senha').valid && formularioLogin.get('senha').touched" class="form-text text-danger">E-mail inválido</small>
       </div>
-      <button type="submit" class="btn btn-primary btn-sm btn-block">Entrar</button>
+      <button type="submit" 
+              class="btn btn-primary btn-sm btn-block"
+              [disabled]="!formularioLogin.valid">Entrar</button>
     </form>
     <hr />
 

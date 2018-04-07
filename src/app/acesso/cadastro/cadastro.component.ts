@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Usuario } from '../usario.model';
 import { Autenticacao } from '../../autenticacao.service';
@@ -11,12 +11,13 @@ import { Autenticacao } from '../../autenticacao.service';
 export class CadastroComponent implements OnInit {
 
   @Output() public exibirPainel: EventEmitter<string> = new EventEmitter<string>();
+  public mensagemErro: string;
 
   public formulario: FormGroup = new FormGroup({
-    'email': new FormControl(null),
-    'nome_completo': new FormControl(null),
-    'nome_usuario': new FormControl(null),
-    'senha': new FormControl(null)
+    'email': new FormControl(null, [Validators.required]),
+    'nome_completo': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    'nome_usuario': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    'senha': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
   constructor(private autenticacao: Autenticacao) {
@@ -31,15 +32,21 @@ export class CadastroComponent implements OnInit {
 
   public cadastrarUsuario(): void {
 
-    let usuario: Usuario = new Usuario(
-      this.formulario.value.email,
-      this.formulario.value.nome_completo,
-      this.formulario.value.nome_usuario,
-      this.formulario.value.senha
-    );
-
-    this.autenticacao.cadastrarUsuario(usuario)
-    .then(() => this.exibirPainelLogin());
-  }
-
+    if ( this.formulario.status === 'VALID' ) {
+      let usuario: Usuario = new Usuario(
+        this.formulario.value.email,
+        this.formulario.value.nome_completo,
+        this.formulario.value.nome_usuario,
+        this.formulario.value.senha
+      );
+        this.autenticacao.cadastrarUsuario(usuario)
+        .then(() => this.exibirPainelLogin())
+        .catch((erro: any) => console.log(erro));
+      } else {
+        this.formulario.get('email').markAsTouched();
+        this.formulario.get('nome_completo').markAsTouched();
+        this.formulario.get('nome_usuario').markAsTouched();
+        this.formulario.get('senha').markAsTouched();
+      }
+    }
 }
